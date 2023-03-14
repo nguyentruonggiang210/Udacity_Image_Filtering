@@ -31,13 +31,16 @@ import {filterImageFromURL, deleteLocalFiles} from './util/util';
 
   //! END @TODO1
   app.get( "/filteredimage", async ( request, response ) => {
-    
+
+    // validate the image_url query
     if(!request.query.image_url){
       return response.status(400).send('Invalid request');
     }
 
+    // call filterImageFromURL(image_url) to filter the image
     var result = await filterImageFromURL(request.query.image_url);
 
+    // send and delete image
     return response.sendFile(result, () => 
     {
       deleteLocalFiles(new Array(result));
