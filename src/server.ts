@@ -30,14 +30,15 @@ import {filterImageFromURL, deleteLocalFiles} from './util/util';
   /**************************************************************************** */
 
   //! END @TODO1
-  app.get( "/filteredimage", async ( req, res ) => {
-    if(!req.query.image_url){
-      return res.status(400).send('Invalid request');
+  app.get( "/filteredimage", async ( request, response ) => {
+    
+    if(!request.query.image_url){
+      return response.status(400).send('Invalid request');
     }
 
-    var result = await filterImageFromURL(req.query.image_url);
-    
-    return res.sendFile(result, () => 
+    var result = await filterImageFromURL(request.query.image_url);
+
+    return response.sendFile(result, () => 
     {
       deleteLocalFiles(new Array(result));
     });
